@@ -54,7 +54,7 @@ function initGame() {
 
                 if (openCards.length == 2) {
                     moveCount();
-
+                    //matching cards
                     if (openCards[0].dataset.card == openCards[1].dataset.card) {
                         openCards[0].classList.add('match');
                         openCards[0].classList.add('open');
@@ -83,7 +83,7 @@ function initGame() {
 
     let moves = 0;
     let counter = document.querySelector('.moves');
-
+    //Counting moves and showing stars according to moves value
     function moveCount() {
         moves++;
         counter.innerHTML = moves;
@@ -99,6 +99,7 @@ let modal = document.querySelector('.modal');
 let matchedCards = document.getElementsByClassName('.match');
 let span = document.getElementsByClassName("close")[0];
 
+//Finishing game if all cards match
 function winGame(match) {
     if (match === 8) {
         modal.style.display = "block";
@@ -113,7 +114,7 @@ function finish() {
 span.onclick = function () {
     modal.style.display = "none";
 };
-
+//Congratulations Popup
 window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";
@@ -132,10 +133,10 @@ window.onclick = function (event) {
 
 let moves = document.querySelector('.moves');
 
-
 document.querySelector('.button').addEventListener('click', newGame);
 document.querySelector('.restart').addEventListener('click', newGame);
 
+//Reseting board, scores and initialize new game
 function newGame() {
     modal.style.display = "none";
     moves.innerHTML = 0;
