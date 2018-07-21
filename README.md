@@ -1,17 +1,18 @@
 # Memory Game Project
 
-## Table of Contents
+## How to play
+This is a memory matching card game. The goal is to match each card's icon with its pair. There are 16 cards and 8 pairs total.
+Click on a card, remember its icon and spot in the grid, then continue clicking other cards until you find its match. The game ends once all pairs are matched.
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+To start click this [LINK](https://ladyofthelakew3.github.io/fend-project-memory-game/).
+## Rules
 
-## Instructions
-
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
-
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+1. You have to match cards with identical icon.
+2. Your moves are counted out as you proceed the game.
+3. If your moves are below to 15 then you will get 3 stars.
+4. If your moves are greater than 15 and less than 21 then you will get 2 stars.
+5. If your moves are equal or greater than 21 then you willget 1 star.
+6. You can also restart the game at any stage by clicking the restart button.
 
 ## Contributing
 
