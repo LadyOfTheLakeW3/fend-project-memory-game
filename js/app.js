@@ -1,7 +1,11 @@
 /*
  * Create a list that holds all of your cards
  */
+const cardsArray = ['fa fa-diamond', 'fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-anchor', 'fa fa-bolt', 'fa fa-bolt', 'fa fa-cube', 'fa fa-cube', 'fa fa-leaf', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-bicycle', 'fa fa-bomb', 'fa fa-bomb'];
 
+function generateCard(card) {
+    return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
+}
 
 /*
  * Display the cards on the page
@@ -12,7 +16,8 @@
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    var currentIndex = array.length,
+        temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -25,6 +30,123 @@ function shuffle(array) {
     return array;
 }
 
+function initGame() {
+    let deck = document.querySelector('.deck');
+    let cardHTML = shuffle(cardsArray).map(function (card) {
+        return generateCard(card);
+    });
+
+    deck.innerHTML = cardHTML.join('');
+
+    let cards = document.querySelectorAll('.card');
+    let openCards = [];
+    let match = 0;
+
+    cards.forEach(function (card) {
+        card.addEventListener('click', function (e) {
+
+            if (!card.classList.contains('open') &&
+                !card.classList.contains('show') &&
+                !card.classList.contains('match')
+            ) {
+                openCards.push(card);
+                card.classList.add('open', 'show');
+
+                if (openCards.length == 2) {
+                    moveCount();
+
+                    if (openCards[0].dataset.card == openCards[1].dataset.card) {
+                        openCards[0].classList.add('match');
+                        openCards[0].classList.add('open');
+                        openCards[0].classList.add('show');
+
+                        openCards[1].classList.add('match');
+                        openCards[1].classList.add('open');
+                        openCards[1].classList.add('show');
+
+                        openCards = [];
+                        match++;
+                        winGame(match);
+
+                    } else {
+                        setTimeout(function () {
+                            openCards.forEach(function (card) {
+                                card.classList.remove('open', 'show');
+                            });
+                            openCards = [];
+                        }, 400);
+                    }
+                }
+            }
+        });
+    });
+
+    let moves = 0;
+    let counter = document.querySelector('.moves');
+
+    function moveCount() {
+        moves++;
+        counter.innerHTML = moves;
+        if (moves > 15 && moves < 21) {
+            document.getElementById('third').style.color = "white";
+        } else if (moves >= 21) {
+            document.getElementById('second').style.color = "white";
+        }
+    }
+};
+
+let modal = document.querySelector('.modal');
+let matchedCards = document.getElementsByClassName('.match');
+let span = document.getElementsByClassName("close")[0];
+
+function winGame(match) {
+    if (match === 8) {
+        modal.style.display = "block";
+        finish();
+    }
+}
+
+function finish() {
+    model.style.display = "block";
+}
+
+span.onclick = function () {
+    modal.style.display = "none";
+};
+
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+    let totalMoves = document.querySelector('.moves').textContent;
+    document.getElementById('totalMoves').textContent = totalMoves + " moves";
+    let theStars = document.getElementsByClassName('stars');
+    if (totalMoves > 15 && totalMoves < 21) {
+        document.getElementById('totalStars').innerHTML = 2 + " stars";
+    } else if (totalMoves >= 21) {
+        document.getElementById('totalStars').innerHTML = 1 + " star";
+    } else {
+        document.getElementById('totalStars').innerHTML = 3 + " stars";
+    }
+};
+
+let moves = document.querySelector('.moves');
+
+
+document.querySelector('.button').addEventListener('click', newGame);
+document.querySelector('.restart').addEventListener('click', newGame);
+
+function newGame() {
+    modal.style.display = "none";
+    moves.innerHTML = 0;
+    document.getElementById('third').style.color = "black";
+    document.getElementById('second').style.color = "black";
+    modal.classList.remove('showed');
+    modal.classList.add('hide');
+    initGame();
+}
+
+initGame();
 
 /*
  * set up the event listener for a card. If a card is clicked:
