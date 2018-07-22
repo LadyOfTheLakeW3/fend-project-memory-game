@@ -45,6 +45,10 @@ function initGame() {
     cards.forEach(function (card) {
         card.addEventListener('click', function (e) {
 
+            if (startGame === 0) {
+                timer();
+                startGame++;
+            }
             if (!card.classList.contains('open') &&
                 !card.classList.contains('show') &&
                 !card.classList.contains('match')
@@ -99,12 +103,41 @@ let modal = document.querySelector('.modal');
 let matchedCards = document.getElementsByClassName('.match');
 let span = document.getElementsByClassName("close")[0];
 
+//Setting timer
+let lastTime = document.querySelector('totaltime');
+let time = document.querySelector('.displayTime');
+let startGame = 0;
+let gameInterval;
+
+function timer() {
+    let minutes = 0;
+    let seconds = 0;
+    gameInterval = setInterval(function () {
+        seconds = parseInt(seconds, 10) + 1;
+        minutes = parseInt(minutes, 10);
+        if (seconds >= 60) {
+            minutes += 1;
+            seconds = 0;
+        }
+
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+
+        time.innerHTML = minutes + ":" + seconds;
+        lastTime.textContent = time.textContent;
+    }, 1000);
+}
 //Finishing game if all cards match
 function winGame(match) {
     if (match === 8) {
+        stopTimer()
         modal.style.display = "block";
         finish();
     }
+}
+
+function stopTimer() {
+    clearInterval(gameInterval);
 }
 
 function finish() {
@@ -129,6 +162,7 @@ window.onclick = function (event) {
     } else {
         document.getElementById('totalStars').innerHTML = 3 + " stars";
     }
+    document.getElementById('totaltime').textContent = time.textContent;
 };
 
 let moves = document.querySelector('.moves');
@@ -144,6 +178,9 @@ function newGame() {
     document.getElementById('second').style.color = "black";
     modal.classList.remove('showed');
     modal.classList.add('hide');
+    startGame = 0;
+    time.innerHTML = '00:00';
+    stopTimer();
     initGame();
 }
 
