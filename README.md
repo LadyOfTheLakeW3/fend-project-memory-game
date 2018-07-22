@@ -14,8 +14,10 @@ To start click this [LINK](https://ladyofthelakew3.github.io/fend-project-memory
 5. If your moves are equal or greater than 21 then you willget 1 star.
 6. You can also restart the game at any stage by clicking the restart button.
 
-## Contributing
+## Dependencies
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+This game depends on:
+* Bootstrap
+* Google Fonts
+* Internet
+* Browser
